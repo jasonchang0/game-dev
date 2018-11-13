@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -20,6 +21,10 @@ img = pygame.transform.rotate(img, 90)
 
 img_width = display_height // 4
 img_height = display_width // 4
+
+
+def draw_blocks(obj_x, obj_y, width, height, color):
+    pygame.draw.rect(gameDisplay, color, [obj_x, obj_y, width, height])
 
 
 def dislpay_img(toBeDisplayed, x, y):
@@ -65,6 +70,12 @@ def game_loop():
 
     dx = 0
 
+    block_start_x = random.randrange(0, display_width)
+    block_start_y = -750
+    block_speed = 10
+    block_width = 40
+    block_height = 40
+
     exit_game = False
 
     while not exit_game:
@@ -95,13 +106,16 @@ def game_loop():
 
         # Changing background color
         gameDisplay.fill(white)
+
+        draw_blocks(block_start_x, block_start_y, block_width, block_height, black)
+        block_start_y += block_speed
+
         dislpay_img(img, x, y)
 
         if not 0 < x < display_width - img_width:
             crash()
 
-        # elif not 0 < y < display_height - img_height:
-        #     exit_game = True
+        
 
         # Updating the current display at 60fps
         pygame.display.update()
