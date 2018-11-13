@@ -70,11 +70,12 @@ def game_loop():
 
     dx = 0
 
-    block_start_x = random.randrange(0, display_width)
-    block_start_y = -750
     block_speed = 10
     block_width = 40
     block_height = 40
+    block_start_y = -750
+    block_start_x = random.randrange(0, display_width - block_width)
+
 
     exit_game = False
 
@@ -115,7 +116,9 @@ def game_loop():
         if not 0 < x < display_width - img_width:
             crash()
 
-        
+        if block_start_y > display_height:
+            block_start_y = - block_height
+            block_start_x = random.randrange(0, display_width - block_width)
 
         # Updating the current display at 60fps
         pygame.display.update()
